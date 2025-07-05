@@ -1479,6 +1479,39 @@ class SoCo(_SocoSingletonBase):
         self.dialog_mode = dialog_level
 
     @property
+    def speech_enhance_enabled(self):
+        """bool: The speaker's dialog mode.
+
+        True if on, False if off, None if not supported.
+        """
+        if not self.is_soundbar:
+            return None
+
+        response = self.renderingControl.GetEQ(
+            [("InstanceID", 0), ("EQType", "SpeechEnhanceEnabled")]
+        )
+        return bool(int(response["CurrentValue"]))
+
+    @speech_enhance_enabled.setter
+    @only_on_soundbars
+    def speech_enhance_enabled(self, speech_mode):
+        """Switch on/off the speaker's dialog mode.
+
+        :param dialog_mode: Enable or disable dialog mode
+        :type dialog_mode: bool
+        :raises NotSupportedException: If the device does not support
+        dialog mode.
+        """
+        self.renderingControl.SetEQ(
+            [
+                ("InstanceID", 0),
+                ("EQType", "SpeechEnhanceEnabled"),
+                ("DesiredValue", int(speech_mode)),
+            ]
+        )
+
+
+    @property
     def trueplay(self):
         """bool: Whether Trueplay is enabled on this device.
         True if on, False if off.

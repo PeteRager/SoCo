@@ -1288,6 +1288,33 @@ class TestRenderingControl:
             [("InstanceID", 0), ("EQType", "AudioDelay"), ("DesiredValue", 1)]
         )
 
+    def test_soco_speech_enhance_mode(self, moco):
+            moco.renderingControl.GetEQ.reset_mock()
+            moco._is_soundbar = False
+            assert moco.speech_enhance_enabled is None
+            assert moco.renderingControl.GetEQ.call_count == 0
+
+            with pytest.raises(NotSupportedException):
+                moco.speech_enhance_enabled = 1
+
+            moco._is_soundbar = True
+
+            moco.renderingControl.GetEQ.return_value = {"CurrentValue": "1"}
+            assert moco.speech_enhance_enabled == 1
+            moco.renderingControl.GetEQ.assert_called_once_with(
+                [("InstanceID", 0), ("EQType", "SpeechEnhanceEnabled")]
+            )
+
+            moco.renderingControl.GetEQ.return_value = {"CurrentValue": "0"}
+            assert moco.speech_enhance_enabled == 0
+
+            moco.renderingControl.SetEQ.reset_mock()
+            moco.speech_enhance_enabled = 1
+            moco.renderingControl.SetEQ.assert_called_once_with(
+                [("InstanceID", 0), ("EQType", "SpeechEnhanceEnabled"), ("DesiredValue", 1)]
+            )
+
+
     def test_soco_fixed_volume(self, moco):
         moco.renderingControl.GetSupportsOutputFixed.return_value = {
             "CurrentSupportsFixed": "1"
