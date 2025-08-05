@@ -1283,6 +1283,7 @@ class TestRenderingControl:
                 moco.trueplay = True
 
     def test_soco_soundbar_audio_input_format(self, moco):
+        moco._is_soundbar = True
         moco.deviceProperties.GetZoneInfo.return_value = {"HTAudioIn": "0"}
         assert moco.soundbar_audio_input_format_code == 0
         assert moco.soundbar_audio_input_format == "No input connected"
