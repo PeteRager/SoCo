@@ -551,7 +551,6 @@ class TestSoco:
         )
 
 
-
 class TestAVTransport:
     @pytest.mark.parametrize(
         "playmode",
@@ -1323,7 +1322,6 @@ class TestRenderingControl:
         moco.renderingControl.SetEQ.assert_called_once_with(
             [("InstanceID", 0), ("EQType", "AudioDelay"), ("DesiredValue", 1)]
         )
-
 
     def test_soco_fixed_volume(self, moco):
         moco.renderingControl.GetSupportsOutputFixed.return_value = {
