@@ -1492,7 +1492,7 @@ class SoCo(_SocoSingletonBase):
 
         True if on, False if off, None if not supported.
         """
-        if not self.is_soundbar:
+        if not self.is_arc_ultra_soundbar:
             return None
 
         response = self.renderingControl.GetEQ(
