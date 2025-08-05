@@ -519,7 +519,6 @@ class TestSoco:
     @mock.patch("soco.core.requests")
     def test_soco_speech_enhance_mode(self, mocr, moco_zgs):
         moco_zgs.renderingControl.GetEQ.reset_mock()
-
         response = mock.MagicMock()
         mocr.get.return_value = response
         response.content = self.device_description
