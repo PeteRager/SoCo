@@ -1511,7 +1511,7 @@ class SoCo(_SocoSingletonBase):
         """
         if not self.is_arc_ultra_soundbar:
             raise NotSupportedException(
-                "The device is not a arc ultra soundbar and doesn't support speech_enhance_enabled."
+                "The device not a arc ultra and doesn't support speech_enhance_enabled."
             )
         self.renderingControl.SetEQ(
             [
