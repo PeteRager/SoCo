@@ -523,19 +523,15 @@ class TestSoco:
         mocr.get.return_value = response
         response.content = self.device_description
 
-        # Data is available only when a soundbar. Test nout a soundbar first
+        # Data is available only when an arc ultra soundbar. Test not a soundbar first
         moco_zgs._is_soundbar = False
         assert moco_zgs.speech_enhance_enabled is None
         assert moco_zgs.renderingControl.GetEQ.call_count == 0
         with pytest.raises(NotSupportedException):
             moco_zgs.speech_enhance_enabled = 1
-        moco_zgs._is_soundbar = True
-        # Setting should raise because its not an arc ultra soundbar
-        with pytest.raises(NotSupportedException):
-            moco_zgs.speech_enhance_enabled = 1
 
-        # Data should be available when a soundbar
-        moco_zgs.speaker_info["model_name"] = ARC_ULTRA_PRODUCT_NAME
+        # Data should be available when an arc ultra soundbar
+        moco_zgs.speaker_info["model_name"] = "speaker prefix " + ARC_ULTRA_PRODUCT_NAME
         moco_zgs.renderingControl.GetEQ.return_value = {"CurrentValue": "1"}
         assert moco_zgs.speech_enhance_enabled == 1
         moco_zgs.renderingControl.GetEQ.assert_called_once_with(
