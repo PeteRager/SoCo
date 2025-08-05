@@ -1501,7 +1501,6 @@ class SoCo(_SocoSingletonBase):
         return bool(int(response["CurrentValue"]))
 
     @speech_enhance_enabled.setter
-    @only_on_soundbars
     def speech_enhance_enabled(self, speech_mode):
         """Switch on/off the arc ultra soundbar speech enhancement.
 
