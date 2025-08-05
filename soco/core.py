@@ -557,6 +557,14 @@ class SoCo(_SocoSingletonBase):
         return self._is_soundbar
 
     @property
+    def is_arc_ultra_soundbar(self):
+        """bool: Is this zone an arc ultra sound bar?"""
+        if not self.speaker_info:
+            self.get_speaker_info()
+
+        return self.speaker_info["model_name"].lower().endswith(ARC_ULTRA_PRODUCT_NAME)
+
+    @property
     def play_mode(self):
         """str: The queue's play mode.
 
@@ -1480,7 +1488,7 @@ class SoCo(_SocoSingletonBase):
 
     @property
     def speech_enhance_enabled(self):
-        """bool: The speaker's dialog mode.
+        """bool: The speaker's speech enhancement mode.
 
         True if on, False if off, None if not supported.
         """
@@ -1495,13 +1503,17 @@ class SoCo(_SocoSingletonBase):
     @speech_enhance_enabled.setter
     @only_on_soundbars
     def speech_enhance_enabled(self, speech_mode):
-        """Switch on/off the speaker's dialog mode.
+        """Switch on/off the arc ultra soundbar speech enhancement.
 
-        :param dialog_mode: Enable or disable dialog mode
-        :type dialog_mode: bool
+        :param speech_mode: Enable or disable dialog mode
+        :type speech_mode: bool
         :raises NotSupportedException: If the device does not support
-        dialog mode.
+        speech enhancement.
         """
+        if not self.is_arc_ultra_soundbar:
+            raise NotSupportedException(
+                "The device is not a arc ultra soundbar and doesn't support speech_enhance_enabled."
+            )        
         self.renderingControl.SetEQ(
             [
                 ("InstanceID", 0),
@@ -3030,6 +3042,8 @@ SOUNDBARS = (
     "ray",
     "sonos amp",
 )
+
+ARC_ULTRA_PRODUCT_NAME = "arc ultra"
 
 if config.SOCO_CLASS is None:
     config.SOCO_CLASS = SoCo

@@ -4,6 +4,7 @@ import requests_mock
 
 from conftest import IP_ADDR
 from soco import SoCo
+from soco.core import ARC_ULTRA_PRODUCT_NAME
 from soco.data_structures import to_didl_string
 from soco.exceptions import (
     SoCoSlaveException,
@@ -514,6 +515,42 @@ class TestSoco:
             }
         )
         assert should == res
+
+    @mock.patch("soco.core.requests")
+    def test_soco_speech_enhance_mode(self, mocr, moco_zgs):
+        moco_zgs.renderingControl.GetEQ.reset_mock()
+
+        response = mock.MagicMock()
+        mocr.get.return_value = response
+        response.content = self.device_description
+
+        # Data is available only when a soundbar. Test nout a soundbar first
+        moco_zgs._is_soundbar = False
+        assert moco_zgs.speech_enhance_enabled is None
+        assert moco_zgs.renderingControl.GetEQ.call_count == 0
+        with pytest.raises(NotSupportedException):
+            moco_zgs.speech_enhance_enabled = 1
+        moco_zgs._is_soundbar = True
+        # Setting should raise because its not an arc ultra soundbar
+        with pytest.raises(NotSupportedException):
+            moco_zgs.speech_enhance_enabled = 1
+
+        # Data should be available when a soundbar
+        moco_zgs.speaker_info["model_name"] = ARC_ULTRA_PRODUCT_NAME
+        moco_zgs.renderingControl.GetEQ.return_value = {"CurrentValue": "1"}
+        assert moco_zgs.speech_enhance_enabled == 1
+        moco_zgs.renderingControl.GetEQ.assert_called_once_with(
+            [("InstanceID", 0), ("EQType", "SpeechEnhanceEnabled")]
+        )
+        moco_zgs.renderingControl.GetEQ.return_value = {"CurrentValue": "0"}
+        assert moco_zgs.speech_enhance_enabled == 0
+
+        moco_zgs.renderingControl.SetEQ.reset_mock()
+        moco_zgs.speech_enhance_enabled = 1
+        moco_zgs.renderingControl.SetEQ.assert_called_once_with(
+            [("InstanceID", 0), ("EQType", "SpeechEnhanceEnabled"), ("DesiredValue", 1)]
+        )
+
 
 
 class TestAVTransport:
@@ -1287,32 +1324,6 @@ class TestRenderingControl:
         moco.renderingControl.SetEQ.assert_called_once_with(
             [("InstanceID", 0), ("EQType", "AudioDelay"), ("DesiredValue", 1)]
         )
-
-    def test_soco_speech_enhance_mode(self, moco):
-            moco.renderingControl.GetEQ.reset_mock()
-            moco._is_soundbar = False
-            assert moco.speech_enhance_enabled is None
-            assert moco.renderingControl.GetEQ.call_count == 0
-
-            with pytest.raises(NotSupportedException):
-                moco.speech_enhance_enabled = 1
-
-            moco._is_soundbar = True
-
-            moco.renderingControl.GetEQ.return_value = {"CurrentValue": "1"}
-            assert moco.speech_enhance_enabled == 1
-            moco.renderingControl.GetEQ.assert_called_once_with(
-                [("InstanceID", 0), ("EQType", "SpeechEnhanceEnabled")]
-            )
-
-            moco.renderingControl.GetEQ.return_value = {"CurrentValue": "0"}
-            assert moco.speech_enhance_enabled == 0
-
-            moco.renderingControl.SetEQ.reset_mock()
-            moco.speech_enhance_enabled = 1
-            moco.renderingControl.SetEQ.assert_called_once_with(
-                [("InstanceID", 0), ("EQType", "SpeechEnhanceEnabled"), ("DesiredValue", 1)]
-            )
 
 
     def test_soco_fixed_volume(self, moco):
