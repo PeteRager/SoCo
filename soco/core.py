@@ -1929,15 +1929,15 @@ class SoCo(_SocoSingletonBase):
         return bool(int(self._voice_config_state))
 
     @property
-    def mic_enabled(self):
+    def mic_enabled(self) -> bool|None:
         """bool: Is the device's microphone enabled?
 
-        .. note:: Returns None if the device does not have a microphone
-            or if a voice service is not configured.
+        .. note:: Returns True is the device has a microphone and it is enabled;
+            False if the microphone is disabled; None if the device does not have a microphone.
 
         """
         self.zone_group_state.poll(self)
-        if not self.voice_service_configured:
+        if self._mic_enabled is None:
             return None
         return bool(int(self._mic_enabled))
 

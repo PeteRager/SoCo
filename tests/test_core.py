@@ -1677,8 +1677,16 @@ class TestZoneGroupTopology:
             elif zone.uid == "RINCON_000E5884455C01400":
                 assert zone.mic_enabled is True
             else:
-                assert zone.mic_enabled is None
+                assert zone.mic_enabled is False
 
+    def test_voice_configured(self, moco_zgs):
+        for zone in moco_zgs.all_zones:
+            if zone.uid == "RINCON_000E58A53FAE01400":
+                assert zone.voice_service_configured is False
+            elif zone.uid == "RINCON_000E5884455C01400":
+                assert zone.voice_service_configured is True
+            else:
+                assert zone.voice_service_configured is False
 
 def test_only_on_master_true(moco_only_on_master):
     with mock.patch(
