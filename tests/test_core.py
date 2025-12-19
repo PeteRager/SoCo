@@ -1682,7 +1682,7 @@ class TestZoneGroupTopology:
     def test_voice_configured(self, moco_zgs):
         for zone in moco_zgs.all_zones:
             if zone.uid == "RINCON_000E58A53FAE01400":
-                assert zone.voice_service_configured is False
+                assert zone.voice_service_configured is True
             elif zone.uid == "RINCON_000E5884455C01400":
                 assert zone.voice_service_configured is True
             else:
