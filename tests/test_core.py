@@ -1678,6 +1678,7 @@ class TestZoneGroupTopology:
             elif zone.uid == "RINCON_B8E93781F3EA01400":
                 assert zone.mic_enabled is None
 
+
 def test_only_on_master_true(moco_only_on_master):
     with mock.patch(
         "soco.SoCo.is_coordinator", new_callable=mock.PropertyMock
