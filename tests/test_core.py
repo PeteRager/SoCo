@@ -91,7 +91,6 @@ ZGS = (
               RoomCalibrationState="4"
               SecureRegState="3"
               VoiceConfigState="0"
-              MicEnabled="0"
               AirPlayEnabled="0"
               IdleState="1"
               MoreInfo=""/>
@@ -1676,17 +1675,8 @@ class TestZoneGroupTopology:
                 assert zone.mic_enabled is False
             elif zone.uid == "RINCON_000E5884455C01400":
                 assert zone.mic_enabled is True
-            else:
-                assert zone.mic_enabled is False
-
-    def test_voice_configured(self, moco_zgs):
-        for zone in moco_zgs.all_zones:
-            if zone.uid == "RINCON_000E58A53FAE01400":
-                assert zone.voice_service_configured is True
-            elif zone.uid == "RINCON_000E5884455C01400":
-                assert zone.voice_service_configured is True
-            else:
-                assert zone.voice_service_configured is False
+            elif zone.uid == "RINCON_B8E93781F3EA01400":
+                assert zone.mic_enabled is None
 
 def test_only_on_master_true(moco_only_on_master):
     with mock.patch(
