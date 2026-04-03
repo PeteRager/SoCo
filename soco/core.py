@@ -122,6 +122,11 @@ class _ArgsSingleton(type):
         if args not in cls._instances[key]:
             cls._instances[key][args] = super().__call__(*args, **kwargs)
         return cls._instances[key][args]
+    
+    def clear_instances(cls):
+        """Clear the instance cache for the given class group, or all groups if
+        no group is specified."""
+        cls._instances.clear()
 
 
 class _SocoSingletonBase(  # pylint: disable=no-init
@@ -3031,6 +3036,14 @@ class SoCo(_SocoSingletonBase):
         return battery_info
 
 
+def soco_initialize():
+    """Initialize the SoCo module.
+
+    This can be called manually to reset the state of the module, for example 
+    to clear the instance cache of the singleton classes.
+    """
+    _ArgsSingleton.clear_instances(_SocoSingletonBase)
+
 # definition section
 
 RADIO_STATIONS = 0
@@ -3100,3 +3113,4 @@ ARC_ULTRA_PRODUCT_NAME = "arc ultra"
 
 if config.SOCO_CLASS is None:
     config.SOCO_CLASS = SoCo
+
