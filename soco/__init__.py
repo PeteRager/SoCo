@@ -9,7 +9,7 @@
 
 import logging
 
-from .core import SoCo
+from .core import SoCo, soco_initialize, soco_shutdown
 from .discovery import discover
 from .exceptions import SoCoException, UnknownSoCoException
 
@@ -26,6 +26,8 @@ __license__ = "MIT License"
 __all__ = [
     "discover",
     "SoCo",
+    "soco_initialize",
+    "soco_shutdown",
     "SoCoException",
     "UnknownSoCoException",
 ]

@@ -124,8 +124,7 @@ class _ArgsSingleton(type):
         return cls._instances[key][args]
     
     def clear_instances(cls):
-        """Clear the instance cache for the given class group, or all groups if
-        no group is specified."""
+        """Clear all cached singleton instances.."""
         cls._instances.clear()
 
 
@@ -3039,10 +3038,23 @@ class SoCo(_SocoSingletonBase):
 def soco_initialize():
     """Initialize the SoCo module.
 
-    This can be called manually to reset the state of the module, for example 
-    to clear the instance cache of the singleton classes.
+    Call this before using the SoCo API to set up any required module state.
+    Currently clears the singleton instance cache; may gain additional
+    responsibilities (config, logging, event handler registration) in future
+    releases.
     """
-    _ArgsSingleton.clear_instances(_SocoSingletonBase)
+    _SocoSingletonBase.clear_instances()
+
+
+def soco_shutdown():
+    """Shut down the SoCo module.
+
+    Call this when finished using the SoCo API to release any module state.
+    Currently clears the singleton instance cache; may gain additional
+    responsibilities (flushing events, closing connections) in future releases.
+    """
+    _SocoSingletonBase.clear_instances()
+
 
 # definition section
 
