@@ -12,7 +12,6 @@ import urllib.parse
 from xml.sax.saxutils import escape
 from xml.parsers.expat import ExpatError
 import warnings
-from black.output import err
 import xmltodict
 
 
