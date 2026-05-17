@@ -16,6 +16,7 @@ from soco import soco_initialize, soco_shutdown
 IP_ADDR = "192.168.1.101"
 THISDIR = path.dirname(path.abspath(__file__))
 
+
 @pytest.fixture(autouse=True)
 def initialize_soco():
     """Reset the singletons between tests to prevent state leakage."""
