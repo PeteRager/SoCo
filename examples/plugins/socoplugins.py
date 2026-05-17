@@ -5,11 +5,13 @@
 
 import time
 
-from soco import SoCo
+from soco import SoCo, soco_initialize, soco_shutdown
 from soco.plugins import SoCoPlugin
 
 
 def main():
+    soco_initialize()
+
     speakers = [speaker.ip_address for speaker in SoCo.discover()]
 
     if not speakers:
@@ -39,6 +41,8 @@ def main():
 
     # do something with your plugin
     myplugin.music_plugin_stop()
+
+    soco_shutdown()
 
 
 if __name__ == "__main__":

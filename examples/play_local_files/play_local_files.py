@@ -39,6 +39,7 @@ except ImportError:
 
     print("Running as python 2")
 
+from soco import soco_initialize, soco_shutdown
 from soco.discovery import by_name, discover
 
 
@@ -119,6 +120,8 @@ def parse_args():
 
 
 def main():
+    soco_initialize()
+
     # Settings
     args = parse_args()
     print(
@@ -167,6 +170,8 @@ def main():
         time.sleep(10**8)
     except KeyboardInterrupt:
         server.stop()
+    finally:
+        soco_shutdown()
 
 
 main()
