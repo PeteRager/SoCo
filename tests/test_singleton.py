@@ -51,22 +51,6 @@ def test_class_group_singleton():
     assert ThirdSingleton("aa") is not ASingleton("aa")
 
 
-def test_clear_instances():
-    """Check that clear_instances creates fresh instances after clearing."""
-    instance_before = ASingleton("aa")
-    Base.clear_instances()
-    instance_after = ASingleton("aa")
-    assert instance_before is not instance_after
-
-
-def test_clear_instances_class_group():
-    """Check that clear_instances also resets class-group singletons."""
-    instance_before = ThirdSingleton("aa")
-    Base.clear_instances()
-    instance_after = ThirdSingleton("aa")
-    assert instance_before is not instance_after
-
-
 def test_soco_initialize_clears_instances():
     """Check that soco_initialize() causes fresh singleton instances."""
     instance_before = ASingleton("aa")

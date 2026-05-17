@@ -123,10 +123,6 @@ class _ArgsSingleton(type):
             cls._instances[key][args] = super().__call__(*args, **kwargs)
         return cls._instances[key][args]
 
-    def clear_instances(cls):
-        """Clear all cached singleton instances.."""
-        cls._instances.clear()
-
 
 class _SocoSingletonBase(  # pylint: disable=no-init
     _ArgsSingleton("ArgsSingletonMeta", (object,), {})
@@ -3047,7 +3043,7 @@ def soco_initialize():
     responsibilities (config, logging, event handler registration) in future
     releases.
     """
-    _SocoSingletonBase.clear_instances()
+    _ArgsSingleton._instances.clear()
 
 
 def soco_shutdown():
@@ -3057,7 +3053,7 @@ def soco_shutdown():
     Currently clears the singleton instance cache; may gain additional
     responsibilities (flushing events, closing connections) in future releases.
     """
-    _SocoSingletonBase.clear_instances()
+    _ArgsSingleton._instances.clear()
 
 
 # definition section
