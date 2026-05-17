@@ -2699,12 +2699,11 @@ class SoCo(_SocoSingletonBase):
         except SoCoUPnPException as err:
             if "Error 402 received" in str(err):
                 raise ValueError("invalid sleep_time_seconds, must be integer \
-                    value between 0 and 86399 inclusive or None") from err            
+                    value between 0 and 86399 inclusive or None") from err
             raise
         except ValueError as error:
             raise ValueError("invalid sleep_time_seconds, must be integer \
-                value between 0 and 86399 inclusive or None"
-            ) from error
+                value between 0 and 86399 inclusive or None") from error
 
     @only_on_master
     def get_sleep_timer(self):
