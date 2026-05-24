@@ -4,37 +4,28 @@ SoCo
 SoCo (Sonos Controller) is a Python library that allows you to
 control `Sonos speakers`_ programmatically. It was originally created at `Music
 Hack Day Sydney`_ by `Rahim Sonawalla`_ and is now developed by a `team of
-people`_ at its `GitHub repository`_
+people`_ at its `GitHub repository`_.
 
 For more background on the project, please see Rahim's `blog post
 <http://www.hirahim.com/blog/2012/04/29/dissecting-the-sonos-controller/>`_.
 
-Visit the `SoCo documentation`_ for a more detailed overview of the functionailty.
-
-.. image:: https://badges.gitter.im/SoCo/SoCo.svg
-   :alt: Join the chat at https://gitter.im/SoCo/SoCo
-   :target: https://gitter.im/SoCo/SoCo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+Visit the `SoCo documentation`_ for a more detailed overview of the functionality.
 
 .. image:: https://img.shields.io/pypi/v/soco.svg?style=flat
-    :target: https://pypi.python.org/pypi/soco/
+    :target: https://pypi.org/project/soco/
     :alt: Latest PyPI version
 
 WARNING
 -------
 
-Sonos has changed the way music service account information is available. This means that **currently a group of music service will give authentication issues and cannot be used at all**. Known members of this group are: Google Play Music, Apple Music, Amazon Music, Spotify and Napster.
+Sonos has changed the way music service authentication works, and **a number of streaming services currently have known issues or cannot be used at all**. Known affected services include Apple Music, Amazon Music, Spotify, and Napster.
 
-Issue #557 is a meta issue for this problem and you can use that to track progress on solving the issues, but
-*please refrain from posting "me too" comments* in there. Also, there is no need to open any more separate issue about this.
-If you have another music service that should be on the list, comment in #557
-
-**As of v0.26.0, nascent music service support has been reinstated, with some known issues. Testing and issue reporting
-would be appreciated.**
+Support for these services is an ongoing effort. See the project's `GitHub Issues <https://github.com/SoCo/SoCo/issues>`_ for current status.
 
 Installation
 ------------
 
-SoCo requires Python 3.6 or newer.
+SoCo requires Python 3.8 or newer.
 
 Use pip:
 
@@ -99,7 +90,7 @@ Of course, you can also play music!
         # Pass in a URI to a media file to have it streamed through the Sonos
         # speaker
         sonos.play_uri(
-            'http://ia801402.us.archive.org/20/items/TenD2005-07-16.flac16/TenD2005-07-16t10Wonderboy.mp3')
+            'https://ia801402.us.archive.org/20/items/TenD2005-07-16.flac16/TenD2005-07-16t10Wonderboy.mp3')
 
         track = sonos.get_current_track_info()
 
@@ -113,7 +104,7 @@ Of course, you can also play music!
 Support
 -------
 
-If you need support for SoCo, feel free to post your question in the `SoCo Gitter Room <https://gitter.im/SoCo/SoCo>`_.
+If you need support for SoCo, feel free to open an issue or discussion on the `SoCo GitHub repository <https://github.com/SoCo/SoCo>`_.
 
 Example Applications
 --------------------
@@ -153,7 +144,7 @@ SoCo supports the following controls amongst others:
 -  Search for and play music items:
 
    -  Local music library
-   -  Webradio via TuneIn and music services (still unstable)
+   -  Webradio via TuneIn and music services (note: some services have known issues — see Warning above)
    -  Saved Sonos favorites, favorite radio stations and shows
 
 -  Switch the speaker’s source to line-in or TV input (if the Zone Player
@@ -212,19 +203,10 @@ Multi-household Sonos systems are supported.
 Older Projects
 ^^^^^^^^^^^^^^
 
-More of a Ruby fan? Not a problem, `Sam Soffes`_ is building out an
-awesome `Ruby gem`_.
+More of a Ruby fan? `Sam Soffes`_ built a `Ruby gem`_, though it is no longer maintained.
 
-Looking for a GUI that’s more than just a sample project? `Joel
-Björkman`_ is building a Sonos Controller GUI–great for folks on Linux
-where there isn’t an official Sonos Controller application! Find, fork,
-and contribute to it here: https://github.com/labero/SoCo-Tk.
-
-
-SoCo Gitter Room
-----------------
-
-There is a `SoCo Gitter discussion room <https://gitter.im/SoCo/SoCo>`_.  Feel free to drop by for support, ideas or casual conversation related to SoCo.
+`Joel Björkman`_ built SoCo-Tk, a Sonos Controller GUI for Linux, though it is no longer maintained:
+https://github.com/labero/SoCo-Tk.
 
 
 License
@@ -243,4 +225,4 @@ SoCo is released under the `MIT license`_.
 .. _Rahim Sonawalla: https://github.com/rahims/SoCo
 .. _GitHub repository: https://github.com/SoCo/SoCo
 .. _team of people: https://github.com/SoCo/SoCo/blob/master/AUTHORS.rst
-.. _SoCo documentation: https://soco.readthedocs.org/en/latest/
+.. _SoCo documentation: https://soco.readthedocs.io/en/latest/
