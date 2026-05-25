@@ -51,7 +51,7 @@ def test_class_group_singleton():
     assert ThirdSingleton("aa") is not ASingleton("aa")
 
 
-def test_soco_initialize_clears_instances():
+def test_soco_reset_clears_instances():
     """Check that soco_reset() causes fresh singleton instances."""
     instance_before = ASingleton("aa")
     soco_reset()
