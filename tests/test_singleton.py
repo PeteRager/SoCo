@@ -52,7 +52,7 @@ def test_class_group_singleton():
 
 
 def test_soco_initialize_clears_instances():
-    """Check that soco_initialize() causes fresh singleton instances."""
+    """Check that soco_reset() causes fresh singleton instances."""
     instance_before = ASingleton("aa")
     soco_reset()
     instance_after = ASingleton("aa")

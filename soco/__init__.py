@@ -26,8 +26,7 @@ __license__ = "MIT License"
 __all__ = [
     "discover",
     "SoCo",
-    "soco_initialize",
-    "soco_shutdown",
+    "soco_reset",
     "SoCoException",
     "UnknownSoCoException",
 ]

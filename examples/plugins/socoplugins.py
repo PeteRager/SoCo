@@ -5,7 +5,7 @@
 
 import time
 
-from soco import SoCo, soco_initialize, soco_shutdown
+from soco import SoCo
 from soco.plugins import SoCoPlugin
 
 
