@@ -40,8 +40,6 @@ def main():
     # do something with your plugin
     myplugin.music_plugin_stop()
 
-    soco_shutdown()
-
 
 if __name__ == "__main__":
     main()
