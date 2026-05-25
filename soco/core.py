@@ -134,11 +134,6 @@ class _SocoSingletonBase(  # pylint: disable=no-init
     here: http://mikewatkins.ca/2008/11/29/python-2-and-3-metaclasses/
     """
 
-    @classmethod
-    def _reset(cls):
-        """Clear the singleton instance cache."""
-        _ArgsSingleton._instances.clear()  # pylint: disable=protected-access
-
 
 def only_on_master(function):
     """Decorator that raises SoCoSlaveException on master call on slave."""
@@ -3043,7 +3038,7 @@ def soco_reset():
     for example when testing. Note that this does not close any open
     connections or release other resources.
     """
-    _SocoSingletonBase._reset()
+    _ArgsSingleton._instances.clear()
 
 
 # definition section
