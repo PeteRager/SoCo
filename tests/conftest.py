@@ -18,7 +18,7 @@ THISDIR = path.dirname(path.abspath(__file__))
 
 
 @pytest.fixture(autouse=True)
-def initialize_soco():
+def reset_soco():
     """Reset the singletons between tests to prevent state leakage."""
     soco_reset()
     yield
