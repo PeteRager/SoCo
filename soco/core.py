@@ -134,6 +134,11 @@ class _SocoSingletonBase(  # pylint: disable=no-init
     here: http://mikewatkins.ca/2008/11/29/python-2-and-3-metaclasses/
     """
 
+    @classmethod
+    def _reset(cls):
+        """Clear the singleton instance cache."""
+        _ArgsSingleton._instances.clear()  # pylint: disable=protected-access
+
 
 def only_on_master(function):
     """Decorator that raises SoCoSlaveException on master call on slave."""
@@ -3031,25 +3036,14 @@ class SoCo(_SocoSingletonBase):
         return battery_info
 
 
-def soco_initialize():
-    """Initialize the SoCo module.
+def soco_reset():
+    """Reset the SoCo module.
 
-    Call this before using the SoCo API to set up any required module state.
-    Currently clears the singleton instance cache; may gain additional
-    responsibilities (config, logging, event handler registration) in future
-    releases.
+    Clears out the singletons instance cache. Use this to reset SoCo state,
+    for example when testing. Note that this does not close any open
+    connections or release other resources.
     """
-    _ArgsSingleton._instances.clear()
-
-
-def soco_shutdown():
-    """Shut down the SoCo module.
-
-    Call this when finished using the SoCo API to release any module state.
-    Currently clears the singleton instance cache; may gain additional
-    responsibilities (flushing events, closing connections) in future releases.
-    """
-    _ArgsSingleton._instances.clear()
+    _SocoSingletonBase._reset()
 
 
 # definition section

@@ -10,8 +10,6 @@ from soco.plugins import SoCoPlugin
 
 
 def main():
-    soco_initialize()
-
     speakers = [speaker.ip_address for speaker in SoCo.discover()]
 
     if not speakers:

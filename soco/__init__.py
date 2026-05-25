@@ -9,7 +9,7 @@
 
 import logging
 
-from .core import SoCo, soco_initialize, soco_shutdown
+from .core import SoCo, soco_reset
 from .discovery import discover
 from .exceptions import SoCoException, UnknownSoCoException
 
